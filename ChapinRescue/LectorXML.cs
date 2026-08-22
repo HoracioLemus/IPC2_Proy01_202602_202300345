@@ -23,6 +23,7 @@ public class LectorXML
             
             
             CargarMalla(nodoCiudad, ciudad);
+            CargarUnidadesMilitares(nodoCiudad, ciudad);
             ciudades.Agregar(ciudad);
         }
         return ciudades;
@@ -40,14 +41,31 @@ public class LectorXML
             
             ListaEnlazada<Celda> fila = new ListaEnlazada<Celda>();
 
-            for (int i = 0; i < contenido.Length; i++)
+            for (int i = 0; i < ciudad.Columnas; i++)
             {
-                char caracter = contenido[i];
+                char caracter = (i < contenido.Length) ? contenido[i] : ' ';
                 int numeroColumna = i + 1;
                 Celda celda = new Celda(numeroFila, numeroColumna, caracter);
                 fila.Agregar(celda);
             }
             ciudad.AgregarFila(fila);
+        }
+    }
+    
+    //Lee las unidades militares de una ciudad y les asigna su capacidad
+    private void CargarUnidadesMilitares(XmlNode nodoCiudad, Ciudad ciudad)
+    {
+        XmlNodeList nodosUnidad = nodoCiudad.SelectNodes("unidadMilitar");
+
+        foreach (XmlNode nodoUnidad in nodosUnidad)
+        {
+            int fila = int.Parse(nodoUnidad.Attributes["fila"].Value);
+            int columna = int.Parse(nodoUnidad.Attributes["columna"].Value);
+            int capacidad = int.Parse(nodoUnidad.InnerText);
+
+            Celda celda = ciudad.ObtenerCelda(fila, columna);
+            celda.Tipo = 'M'; //Marca la celda como Militar
+            celda.Capacidad = capacidad;
         }
     }
 }

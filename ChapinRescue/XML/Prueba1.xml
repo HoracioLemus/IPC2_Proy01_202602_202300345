@@ -4,7 +4,7 @@
         <ciudad>
             <nombre filas="3" columnas="3">CiudadPrueba</nombre>
             <fila numero="1">E *</fila>
-            <fila numero="2">   </fila>
+            <fila numero="2">abc</fila>
             <fila numero="3">* C</fila>
             <unidadMilitar fila="2" columna="2">20</unidadMilitar>
         </ciudad>

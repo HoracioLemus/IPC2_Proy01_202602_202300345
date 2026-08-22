@@ -17,5 +17,9 @@ while (actual != null)
     Celda celda2 = actual.Dato.ObtenerCelda(3, 2);
     Console.WriteLine("Celda (3,2) tipo: "+ celda2.Tipo);
     
+    //Prueba de celda militar
+    Celda celdaMilitar = actual.Dato.ObtenerCelda(2, 2);
+    Console.WriteLine("Celda (2,2) tipo: "+ celdaMilitar.Tipo + ", capacidad: " + celdaMilitar.Capacidad);
+
     actual = actual.Siguiente;
 }
