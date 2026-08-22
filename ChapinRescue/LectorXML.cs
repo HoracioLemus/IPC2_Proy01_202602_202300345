@@ -10,7 +10,7 @@ public class LectorXML
         ListaEnlazada<Ciudad> ciudades = new ListaEnlazada<Ciudad>();
         XmlDocument doc = new XmlDocument();
         doc.Load(rutaArchivo);
-        
+
         //Busqueda de nodos ciudad
         XmlNodeList nodosCiudad = doc.GetElementsByTagName("ciudad");
         foreach (XmlNode nodoCiudad in nodosCiudad)
@@ -20,25 +20,26 @@ public class LectorXML
             int filas = int.Parse(nodoNombre.Attributes["filas"].Value);
             int columnas = int.Parse(nodoNombre.Attributes["columnas"].Value);
             Ciudad ciudad = new Ciudad(nombre, filas, columnas);
-            
-            
+
+
             CargarMalla(nodoCiudad, ciudad);
             CargarUnidadesMilitares(nodoCiudad, ciudad);
             ciudades.Agregar(ciudad);
         }
+
         return ciudades;
     }
-    
+
     //Lee las filas de un nodo y las convierte en la malla de celdas
     private void CargarMalla(XmlNode nodoCiudad, Ciudad ciudad)
     {
         XmlNodeList nodosFila = nodoCiudad.SelectNodes("fila");
-        
+
         foreach (XmlNode nodoFila in nodosFila)
         {
             int numeroFila = int.Parse(nodoFila.Attributes["numero"].Value);
             String contenido = nodoFila.InnerText;
-            
+
             ListaEnlazada<Celda> fila = new ListaEnlazada<Celda>();
 
             for (int i = 0; i < ciudad.Columnas; i++)
@@ -48,10 +49,11 @@ public class LectorXML
                 Celda celda = new Celda(numeroFila, numeroColumna, caracter);
                 fila.Agregar(celda);
             }
+
             ciudad.AgregarFila(fila);
         }
     }
-    
+
     //Lee las unidades militares de una ciudad y les asigna su capacidad
     private void CargarUnidadesMilitares(XmlNode nodoCiudad, Ciudad ciudad)
     {
@@ -66,6 +68,38 @@ public class LectorXML
             Celda celda = ciudad.ObtenerCelda(fila, columna);
             celda.Tipo = 'M'; //Marca la celda como Militar
             celda.Capacidad = capacidad;
+        }
+    }
+
+    //Carga la lista de robots desde el XML
+    public ListaEnlazada<Robot> CargarRobots(string rutaArchivo)
+    {
+        ListaEnlazada<Robot> robots = new ListaEnlazada<Robot>();
+
+        XmlDocument doc = new XmlDocument();
+        doc.Load(rutaArchivo);
+
+        XmlNodeList nodosRobot = doc.GetElementsByTagName("robot");
+        {
+            foreach (XmlNode nodoRobot in nodosRobot)
+            {
+                XmlNode nodoNombre = nodoRobot["nombre"];
+                string nombre = nodoNombre.InnerText;
+                string tipo = nodoNombre.Attributes["tipo"].Value;
+
+                if (tipo == "ChapinRescue")
+                {
+                    robots.Agregar(new ChapinRescue(nombre));
+
+                }
+                else if (tipo == "ChapinFighter")
+                {
+                    int capacidad = int.Parse(nodoNombre.Attributes["capacidad"].Value);
+                    robots.Agregar(new ChapinFighter(nombre, capacidad));
+                }
+            }
+
+            return robots;
         }
     }
 }

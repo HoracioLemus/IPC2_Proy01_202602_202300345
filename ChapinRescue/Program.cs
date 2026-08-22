@@ -23,3 +23,13 @@ while (actual != null)
 
     actual = actual.Siguiente;
 }
+
+//Prueba de robots
+
+ListaEnlazada<Robot> robots = lector.CargarRobots("xml/prueba1.xml");
+Nodo<Robot> actualRobot = robots.ObtenerPrimero();
+while (actualRobot != null)
+{
+    Console.WriteLine("Robot: " + actualRobot.Dato.Nombre);
+    actualRobot = actualRobot.Siguiente;
+}
