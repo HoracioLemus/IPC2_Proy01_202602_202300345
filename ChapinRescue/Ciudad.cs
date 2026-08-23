@@ -54,4 +54,29 @@ public class Ciudad
         
         return nodoColumna.Dato;
     }
+    
+    //Buscar y devolver lista con todas las celdas de un tipo especifico
+    public ListaEnlazada<Celda> BuscarCeldasPorTipo(char tipo)
+    {
+        ListaEnlazada<Celda> encontradas = new ListaEnlazada<Celda>();
+
+        Nodo<ListaEnlazada<Celda>> nodoFila = Malla.ObtenerPrimero();
+        while (nodoFila !=null)
+        {
+            Nodo<Celda> nodoCelda = nodoFila.Dato.ObtenerPrimero();
+            while (nodoCelda  != null)
+            {
+                if (nodoCelda.Dato.Tipo == tipo)
+                {
+                    encontradas.Agregar(nodoCelda.Dato);
+                }
+
+                nodoCelda = nodoCelda.Siguiente;
+            }
+
+            nodoFila = nodoFila.Siguiente;
+        }
+
+        return encontradas;
+    }
 }
