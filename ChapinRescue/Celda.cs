@@ -7,6 +7,11 @@ public class Celda
     public char Tipo;
     public int Capacidad;
     
+    //Atributos para busqueda de caminos
+    public bool Visitada;
+
+    public Celda CeldaAnterior;
+    
     //Constructor
     public Celda(int fila, int columna, char tipo)
     {
@@ -14,5 +19,7 @@ public class Celda
         Columna = columna;
         Tipo = tipo;
         Capacidad = 0; //Se actualizara despues si es unidad militar
+        Visitada = false;
+        CeldaAnterior = null;
     }
 }
