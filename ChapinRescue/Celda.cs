@@ -6,6 +6,7 @@ public class Celda
     public int Columna;
     public char Tipo;
     public int Capacidad;
+    public bool EnCamino;
     
     //Atributos para busqueda de caminos
     public bool Visitada;
@@ -21,5 +22,8 @@ public class Celda
         Capacidad = 0; //Se actualizara despues si es unidad militar
         Visitada = false;
         CeldaAnterior = null;
+        EnCamino = false;
     }
+
+
 }

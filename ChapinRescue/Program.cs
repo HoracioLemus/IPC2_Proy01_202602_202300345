@@ -54,3 +54,20 @@ else
     mision.AplicarCostoCombate(resultadoExtraccion, robotFighter);
     Console.WriteLine("Extraccion: camino encontrado, capacidad final: " + robotFighter.Capacidad);
 }
+
+// Generación de archivo Graphviz
+if (resultadoRescate != null)
+{
+    GeneradorGraphviz generador = new GeneradorGraphviz();
+    string contenidoDot = generador.GenerarDot(ciudad, resultadoRescate);
+    File.WriteAllText("rescate.dot", contenidoDot);
+    Console.WriteLine("Archivo rescate.dot generado exitosamente.");
+}
+
+if (resultadoExtraccion !=null)
+{
+    GeneradorGraphviz generador2 = new GeneradorGraphviz();
+    string contenidoDot2 = generador2.GenerarDot(ciudad, resultadoExtraccion);
+    File.WriteAllText("extraccion.dot", contenidoDot2);
+    Console.WriteLine("Archivo extraccion.dot generado exitosamente.");
+}
