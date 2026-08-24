@@ -39,6 +39,12 @@ public class LectorXML
         {
             int numeroFila = int.Parse(nodoFila.Attributes["numero"].Value);
             String contenido = nodoFila.InnerText;
+            
+            //quitar comillas
+            if (contenido.Length >= 2 && contenido.StartsWith("\"") && contenido.EndsWith("\""))
+            {
+                contenido= contenido.Substring(1, contenido.Length - 2);
+            }
 
             ListaEnlazada<Celda> fila = new ListaEnlazada<Celda>();
 
