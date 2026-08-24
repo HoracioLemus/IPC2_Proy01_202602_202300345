@@ -181,6 +181,132 @@ if (TipoMision == 1)
 else if (TipoMision == 2)
 {
     Console.WriteLine("Iniciando Misión de Extracción de Recursos...");
+    
+    //Busqueda de entrada
+    ListaEnlazada<Celda> entradasExt = ciudadElegida.BuscarCeldasPorTipo('E');
+    Celda entradaElegidaExt = entradasExt.ObtenerPrimero().Dato;
+    
+    //Busqueda Recursos
+    ListaEnlazada<Celda> recursos = ciudadElegida.BuscarCeldasPorTipo('R');
+
+    if (recursos.Contar()==0)
+    {
+        Console.WriteLine("Esta Ciudad no tiene recursos para extraer.");
+    }
+    else
+    {
+        Celda recursoElegido;
+        if (recursos.Contar() == 1)
+        {
+            recursoElegido = recursos.ObtenerPrimero().Dato;
+        }
+        else
+        {
+            Console.WriteLine("Recursos Disponibles: ");
+            int i = 1;
+            Nodo<Celda> nodoRecurso = recursos.ObtenerPrimero();
+            while (nodoRecurso != null)
+            {
+                Console.WriteLine(i+ ".Fila "+ nodoRecurso.Dato.Fila + ", Columna "+ nodoRecurso.Dato.Columna);
+                i++;
+                nodoRecurso = nodoRecurso.Siguiente;
+            }
+            Console.WriteLine("Seleccione Recursos para Extraer: ");
+            int seleccionRecurso = int.Parse(Console.ReadLine());
+
+            i = 1;
+            nodoRecurso = recursos.ObtenerPrimero();
+            recursoElegido = null;
+            while (nodoRecurso != null)
+            {
+                if (i == seleccionRecurso)
+                {
+                    recursoElegido = nodoRecurso.Dato;
+                }
+
+                i++;
+                nodoRecurso = nodoRecurso.Siguiente;
+            }
+        }
+        
+        //Robots ChapinFighter Disponibles
+        ListaEnlazada<Robot> robotsFighter = new ListaEnlazada<Robot>();
+        Nodo<Robot> nodoRobotF = robots.ObtenerPrimero();
+        while (nodoRobotF !=null)
+        {
+            if (nodoRobotF.Dato is ChapinFighter)
+            {
+                robotsFighter.Agregar(nodoRobotF.Dato);
+            }
+            nodoRobotF = nodoRobotF.Siguiente;
+        }
+
+        if (robotsFighter.Contar() == 0)
+        {
+            Console.WriteLine("No hay robots ChapinFighter Disponibles.");
+        }
+        else
+        {
+            ChapinFighter robotFighterElegido;
+
+            if (robotsFighter.Contar() == 1)
+            {
+                robotFighterElegido = (ChapinFighter)robotsFighter.ObtenerPrimero().Dato;
+            }
+            else
+            {
+                Console.WriteLine("Robots ChapinFighter Disponibles: ");
+                int i = 1;
+                Nodo<Robot> nodoRF = robotsFighter.ObtenerPrimero();
+                while (nodoRF != null)
+                {
+                    ChapinFighter f = (ChapinFighter)nodoRF.Dato;
+                    Console.WriteLine(i + ". " + f.Nombre + " (Capacidad: " + f.Capacidad + ")");
+                    i++;
+                    nodoRF = nodoRF.Siguiente;
+                }
+                Console.WriteLine("Seleccione Robot a Utilizar: ");
+                int seleccionRF = int.Parse(Console.ReadLine());
+
+                i = 1;
+                nodoRF = robotsFighter.ObtenerPrimero();
+                robotFighterElegido = null;
+                while (nodoRF != null)
+                {
+                    if (i == seleccionRF)
+                    {
+                        robotFighterElegido = (ChapinFighter)nodoRF.Dato;
+                    }
+
+                    i++;
+                    nodoRF = nodoRF.Siguiente;
+                }
+            }
+            
+            //Ejecutar Mision
+            Mision misionExt = new Mision();
+            Celda resultadoExt = misionExt.BuscarCaminoExtraccion(ciudadElegida, entradaElegidaExt, recursoElegido,
+                robotFighterElegido);
+            if(resultadoExt == null)
+            {
+                Console.WriteLine("Mision Imposible");
+            }
+            else
+            {
+                misionExt.AplicarCostoCombate(resultadoExt, robotFighterElegido);
+
+                Console.WriteLine();
+                Console.WriteLine("Tipo de Mision: Extraccion de Recursos");
+                Console.WriteLine("Recurso extraido: "+recursoElegido.Fila + ","+recursoElegido.Columna);
+                Console.WriteLine("Robot Utilizado: "+ robotFighterElegido.Nombre + "(ChapinFighter - Capacidad Final: "+ robotFighterElegido.Capacidad + ")");
+
+                GeneradorGraphviz generadorExt = new GeneradorGraphviz();
+                string contenidoDotExt = generadorExt.GenerarDot(ciudadElegida, resultadoExt);
+                File.WriteAllText("extraccion.dot", contenidoDotExt);
+                Console.WriteLine("Grafico generado: extraccion.dot");
+            }
+        }
+    }
 }
 else
 {
