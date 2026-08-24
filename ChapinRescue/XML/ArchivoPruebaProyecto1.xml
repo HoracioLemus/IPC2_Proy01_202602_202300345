@@ -1,0 +1,36 @@
+<configuracion>
+<listaCiudades>
+<ciudad>
+<nombre filas="12" columnas="12">CiudadCompleta</nombre>
+<fila numero="1">"*E*C*R******"</fila>
+<fila numero="2">"* * * ******"</fila>
+<fila numero="3">"* * * ******"</fila>
+<fila numero="4">"* * * ******"</fila>
+<fila numero="5">"* * * ******"</fila>
+<fila numero="6">" "</fila>
+<fila numero="7">"******* * * "</fila>
+<fila numero="8">"******* * * "</fila>
+<fila numero="9">"******* * * "</fila>
+<fila numero="10">"******* * * "</fila>
+<fila numero="11">"*******C*R* "</fila>
+<fila numero="12">"***********E"</fila>
+<unidadMilitar fila="3" columna="6">10</unidadMilitar>
+<unidadMilitar fila="8" columna="10">25</unidadMilitar>
+<unidadMilitar fila="10" columna="10">15</unidadMilitar>
+</ciudad>
+</listaCiudades>
+<robots>
+<robot>
+<nombre tipo="ChapinRescue">RescateUno</nombre>
+</robot>
+<robot>
+<nombre tipo="ChapinFighter" capacidad="50">HalconRojo</nombre>
+</robot>
+<robot>
+<nombre tipo="ChapinFighter" capacidad="45">Veterano</nombre>
+</robot>
+<robot>
+<nombre tipo="ChapinFighter" capacidad="30">Novato</nombre>
+</robot>
+</robots>
+</configuracion>

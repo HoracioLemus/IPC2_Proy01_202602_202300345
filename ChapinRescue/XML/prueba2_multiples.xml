@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<configuracion>
+    <listaCiudades>
+        <ciudad>
+            <nombre filas="3" columnas="4">CiudadMultiple</nombre>
+            <fila numero="1">E   </fila>
+            <fila numero="2">    </fila>
+            <fila numero="3">C  C</fila>
+        </ciudad>
+    </listaCiudades>
+    <robots>
+        <robot>
+            <nombre tipo="ChapinRescue">robot01</nombre>
+        </robot>
+        <robot>
+            <nombre tipo="ChapinRescue">robot02</nombre>
+        </robot>
+        <robot>
+            <nombre tipo="ChapinFighter" capacidad="50">robot03</nombre>
+        </robot>
+    </robots>
+</configuracion>
